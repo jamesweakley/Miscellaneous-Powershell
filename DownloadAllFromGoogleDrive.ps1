@@ -1,10 +1,43 @@
 ﻿
 function DownloadFromGoogleDrive{ 
+    <#
+    .SYNOPSIS
+
+    Used for downloading a directory tree recursively from a Google drive folder.
+
+    
+    .DESCRIPTION
+
+    Accepts a URL representing a Google Drive folder and a local folder path. Retrieves the HTML and downloads each file to the specified path.
+    For each subfolder, calls itself recursively to download the entire tree.
+
+    .PARAMETER webUrl
+
+    The URL for the Google Drive folder
+
+    .PARAMETER localFolder
+
+    The path to download the files to locally.
+    
+    .EXAMPLE
+
+    DownloadFromGoogleDrive -webUrl "https://someidentifier.googledrive.com/host/anotheridentifier/" -localFolder "C:\LocalCopy\"
+    
+    .NOTES
+
+    Folders will be created if they are missing.
+
+    #>
     param( 
          [System.Uri]$webUrl = $(throw "webUrl parameter not specified"),
          [String]$localFolder = ".\") 
     
     write-host "Creating folder if it doesn't exist"
+
+    if (!$localFolder.EndsWith("\"))
+    {
+        $localFolder=$localFolder+"\"
+    }
 
     New-Item -ItemType Directory -Force -Path $localFolder
 
