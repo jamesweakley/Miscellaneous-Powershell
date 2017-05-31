@@ -81,7 +81,7 @@
   $total=$status.messageCount
   while ($counter -lt $total){
     $filePath = "$($filePrefix)_$($counter).json"
-    Invoke-WebRequest -Uri "$apiEndpoint/search/jobs/$($jobid)/messages?offset=$counter&limit=$pageSize" -Method Get -WebSession $createSearchJobResult.webSession -OutFile $filePath
+    Invoke-WebRequest -Uri "$apiEndpoint/search/jobs/$($jobid)/messages?offset=$counter&limit=$pageSize" -Method Get -WebSession $webSession -OutFile $filePath
     echo $counter;$counter += $pageSize;
   }
   write-host "Export complete!"
